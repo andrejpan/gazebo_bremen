@@ -18,8 +18,11 @@
 
 #include <gazebo/gui/GuiIface.hh>
 
+#include <string.h>
+#include <stdlib.h>     /* strtol */
+
 #define BufferLength 25
-#define SERVER "192.168.101.143"
+#define SERVER "192.168.101.157"
 #define SERVPORT 1234
 
 namespace gazebo
@@ -52,15 +55,25 @@ namespace gazebo
         private: event::ConnectionPtr updateFunction;
 
         /// \brief Standard Ogre scene node.
-        public: Ogre::SceneNode *sceneNode;
+        private: Ogre::SceneNode *sceneNode;
 
         /// \brief Standard Ogre entity.
-        public: Ogre::Entity *entity;
+        private: Ogre::Entity *entity;
 
         /// \brief Srandard Ogre scene manager.
-        public: Ogre::SceneManager *manager;
+        private: Ogre::SceneManager *manager;
 
-    public: int i;
+        /// \brief Float values for (x,y) point on screen.
+        private: float x,y;
+
+        /// \brief Int values for (x,y) point on screen.
+        private: int xI, yI;
+
+        /// \brief Gives information about received string.
+        private: char * pch;
+
+        /// \brief Pointer to the next number in string.
+        private: char * pEnd;
 
         /// \brief Load.
         public: void Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/);

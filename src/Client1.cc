@@ -7,9 +7,9 @@ using namespace gazebo;
 void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
 {
     cout << "Load function has been called" << endl;
-    //this->ConnectToServer();
+    this->ConnectToServer();
 
-    //this->listeningThread = new boost::thread(boost::bind(&Client1::ListenThread, this));
+    this->listeningThread = new boost::thread(boost::bind(&Client1::ListenThread, this));
 
     // Listen to the update event. This event is broadcast every
     // simulation iteration.
@@ -26,17 +26,19 @@ void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
     this->sceneNode->setScale(0.001, 0.001, 0.001);
     this->sceneNode->setPosition(2, 0, 2);
     this->sceneNode->attachObject(entity);
-    this->i = 0;
+    this->xI = 0;
+    this->yI = 0;
 
 }
 
 //////////////////////////////////////////////////
 void Client1::OnUpdate()
 {
-    cout << "SystemSubscriber: Entering OnUpdate() " << endl;
-    this->i = this->i + 0.01;
-    cout << this->i << endl;
-    this->sceneNode->setPosition(2+i, 2+i, 0);
+    //cout << "SystemSubscriber: Entering OnUpdate() " << endl;
+
+    //this->sceneNode->setPosition(2 + xI/10000, 2 + yI/10000, 0);
+    this->sceneNode->setPosition(xI/100.0, yI/100.0, 0);
+    //printf("%f,%f\n", xI/100.0, yI/100.0);
 }
 
 //////////////////////////////////////////////////
@@ -97,9 +99,15 @@ void Client1::ListenThread()
         }
         else
         {
-            cout << this->buffer << endl;
+            // lets be sure, that we recieve right data
+            pch=strchr(this->buffer,' ');
+            if(pch!=NULL)
+            {
+                xI = strtol(this->buffer, &pEnd, 10);
+                yI = strtol(pEnd, NULL, 10);
+                //printf("%d, %d\n", xI, yI);
+            }
         }
-
         boost::this_thread::sleep(workTime);
     }
 }
