@@ -27,18 +27,23 @@ void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
     this->sceneNode->setPosition(0, 0, 0);
     this->sceneNode->attachObject(entity);
     this->xI = 0;
-    this->yI = 0;
+    this->yI = 1;
 
 
-    mongo::client::initialize();
-/*
+    //mongo::client::initialize();
+    mongo::DBClientConnection c;
     try {
-        mongo::DBClientConnection c;
         c.connect("localhost");
         std::cout << "connected ok" << std::endl;
     } catch( const mongo::DBException &e ) {
         std::cout << "caught " << e.what() << std::endl;
-    }*/
+    }
+
+    mongo::BSONObjBuilder b;
+    b.append("name", "Joe");
+    b.append("age", 33);
+    mongo::BSONObj p = b.obj();
+    c.insert("tutorial.persons", p);
 }
 
 //////////////////////////////////////////////////
