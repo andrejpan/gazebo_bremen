@@ -1,1 +1,0 @@
-/home/andrejpan/Documents/gazebo/gazebo_mongodb_sending/build/src/CMakeFiles/Client1.dir
