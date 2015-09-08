@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(testing)
-set(MONGO_INCLUDE_DIR /home/andrejpan/mongo-client-install/include)
+set(MONGO_INCLUDE_DIR /home/andrejpan/mongo-client-install-26compat/include)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 

@@ -24,9 +24,12 @@
 #include <mongo/client/dbclient.h>
 #include "mongo/client/init.h"
 
+#include <gazebo/transport/transport.hh>
+#include <gazebo/msgs/msgs.hh>
+#include <gazebo/gazebo_client.hh>
 
 #define BufferLength 25
-#define SERVER "192.168.101.173"
+#define SERVER "192.168.101.188"
 #define SERVPORT 1234
 
 namespace gazebo
@@ -79,14 +82,20 @@ namespace gazebo
         /// \brief Pointer to the next number in string.
         private: char * pEnd;
 
-        /// \brief
-        private: rendering::VisualPtr VPtr;
+        /// \brief  //apparently I am not ussing it anymore
+        //private: rendering::VisualPtr VPtr;
 
-        /// \brief Minimal fixation data.
+        /// \brief Minimal fixation data from sensor.
         private: math::Vector2i coords2i;
 
-        /// \brief
+        /// \brief Point in space where we look.
         private: math::Vector3 contactPoint;
+
+        /// \brief Connection to the mongodb server.
+        mongo::DBClientConnection c;
+
+        //mongo::BSONObjBuilder b;
+        //mongo::BSONObj p;
 
         /// \brief Load.
         public: void Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/);
@@ -99,6 +108,9 @@ namespace gazebo
 
         /// \brief Getting data from server in thread.
         private: void ListenThread();
+
+    public:transport::NodePtr node;
+        public: void mycb1(ConstWorldStatisticsPtr &_msg);
 
     };
 }

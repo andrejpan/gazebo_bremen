@@ -7,18 +7,16 @@ using namespace gazebo;
 void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
 {
     cout << "Load function has been called" << endl;
-    /*this->ConnectToServer();
-
-    this->listeningThread = new boost::thread(boost::bind(&Client1::ListenThread, this));
+    this->ConnectToServer();
 
     // Listen to the update event. This event is broadcast every
     // simulation iteration.
-    this->updateFunction = event::Events::ConnectRender(
-        boost::bind(&Client1::OnUpdate, this));
+    this->listeningThread = new boost::thread(boost::bind(&Client1::ListenThread, this));
+
+    this->updateFunction = event::Events::ConnectRender(boost::bind(&Client1::OnUpdate, this));
 
     this->manager = gui::get_active_camera()->GetScene()->GetManager();
     this->sceneNode = this->manager->getRootSceneNode()->createChildSceneNode("MySphere");
-    //this->sceneNode = this->manager->getRootSceneNode()->createChildSceneNode();
     this->entity = this->manager->createEntity("MySphere", Ogre::SceneManager::PT_SPHERE);
     this->entity->setMaterialName("Gazebo/Red");
     this->sceneNode->setVisible(true);
@@ -28,15 +26,12 @@ void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
     this->sceneNode->attachObject(entity);
     this->xI = 0;
     this->yI = 1;
-*/
+
+    // getting erros when I try to define status in header
 
     mongo::Status status = mongo::client::initialize();
     if (!status.isOK())
         ::abort();
-
-    cout << "Load function has been called2" << endl;
-/*
-    mongo::DBClientConnection c;
     try {
         c.connect("localhost");
         std::cout << "connected ok" << std::endl;
@@ -44,12 +39,34 @@ void Client1::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
         std::cout << "caught " << e.what() << std::endl;
     }
 
-    mongo::BSONObjBuilder b;
-    b.append("name", "Joe");
-    b.append("age", 33);
-    mongo::BSONObj p = b.obj();
-    c.insert("tutorial.persons", p);
-*/
+
+    node = transport::NodePtr(new transport::Node());
+    node->Init();
+    std::cout << "Subscribing to: " << "~/world_stats" << std::endl;
+    // Listen to Gazebo world_stats topic
+    gazebo::transport::SubscriberPtr sub = node->Subscribe("~/world_stats", &Client1::mycb1, this);
+
+    //mongo::BSONObj query = BSON( "cord" << BSON_ARRAY(1 << 5 << 10) );
+    //cout << query << endl;
+
+    //b.append("name", "Joe");
+    //b.append("age", 35);
+    //b.append("cord", BSON_ARRAY(1 << 5 << 10));
+    //p = b.obj();
+    //cout << p << endl;
+    //c.insert("tutorial.persons", p);
+
+}
+
+
+/////////////////////////////////////////////////
+// Function is called everytime a message is received.
+void mycb1(ConstWorldStatisticsPtr &_msg)
+{
+    std::cout << "Received message" << std::endl;
+
+  // Dump the message contents to stdout.
+//  std::cout << _msg->DebugString();
 }
 
 //////////////////////////////////////////////////
@@ -63,7 +80,15 @@ void Client1::OnUpdate()
     if (this->mUserCam->GetScene()->GetFirstContact(this->mUserCam, this->coords2i, this->contactPoint))
     {
         this->sceneNode->setPosition(this->contactPoint.x, this->contactPoint.y, this->contactPoint.z);
+        mongo::BSONObjBuilder b;
+        mongo::BSONObj p;
+
+        b.append("cord", BSON_ARRAY(this->contactPoint.x << this->contactPoint.y << this->contactPoint.z));
+        p = b.obj();
+        c.insert("tutorial.persons", p);
+        cout << p << endl;
     }
+
 }
 
 //////////////////////////////////////////////////
