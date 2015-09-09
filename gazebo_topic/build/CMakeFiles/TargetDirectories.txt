@@ -1,2 +1,0 @@
-/home/andrejpan/Documents/gazebo/gazebo_topic/build/src/CMakeFiles/visual_listener.dir
-/home/andrejpan/Documents/gazebo/gazebo_topic/build/src/CMakeFiles/world_listener.dir
