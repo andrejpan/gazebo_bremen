@@ -1,9 +1,9 @@
-#include "word_listener.hh"
+#include "visual_listener.hh"
 
 using namespace  gazebo;
 
 
-void WorldListener::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
+void VisualListener::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/)
 {
     std::cout << "Load up!\n";
 
@@ -11,19 +11,20 @@ void WorldListener::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
     node = transport::NodePtr(new transport::Node());
 
     // Initialize the node with the world name
-     node->Init(_world->GetName());
+    node->Init(_parent->GetName());
 
     // Listen to Gazebo world_stats topic
-    commandSubscriber = node->Subscribe("~/world_stats", &WorldListener::cb, this);
+    commandSubscriber = node->Subscribe("~/world_stats", &VisualListener::cb, this);
+    std::cout << "exit Load\n";
 }
 
-void WorldListener::cb(ConstWorldStatisticsPtr &_msg)
+void VisualListener::cb(ConstWorldStatisticsPtr &_msg)
 {
   //std::cout << _msg->DebugString();
   std::cout << _msg->sim_time().sec() << '.' <<_msg->sim_time().nsec() << std::endl;
 }
 
-GZ_REGISTER_WORLD_PLUGIN(WorldListener)
+GZ_REGISTER_VISUAL_PLUGIN(VisualListener)
 
 
 
