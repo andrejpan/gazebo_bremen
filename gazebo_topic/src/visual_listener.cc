@@ -11,10 +11,10 @@ void VisualListener::Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/
     node = transport::NodePtr(new transport::Node());
 
     // Initialize the node with the world name
-    node->Init(_parent->GetName());
+    node->Init();
 
     // Listen to Gazebo world_stats topic
-    commandSubscriber = node->Subscribe("~/world_stats", &VisualListener::cb, this);
+    commandSubscriber = node->Subscribe("/gazebo/default/world_stats", &VisualListener::cb, this);
     std::cout << "exit Load\n";
 }
 

@@ -12,7 +12,6 @@ namespace gazebo
 {
     class WorldListener : public WorldPlugin
     {
-        public: physics::WorldPtr world;
         public: transport::NodePtr node;
         public: transport::SubscriberPtr commandSubscriber;
 
