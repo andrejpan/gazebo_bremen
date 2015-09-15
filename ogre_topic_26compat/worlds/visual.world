@@ -1,0 +1,44 @@
+<?xml version="1.0"?> 
+<sdf version="1.5">
+  <world name="default">
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name="box">
+      <pose>0 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 2</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+            <plugin name="world-listener" filename="build/src/libvisual_listener.so"/>
+    
+          <geometry>
+            <box>
+              <size>1 1 2</size>
+            </box>
+          </geometry>          
+        </visual>
+      </link>
+      
+    </model>
+    <gui fullscreen='1'>
+      <camera name='user_camera'>
+        <pose>0 0 10 0 1.5707 0</pose>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
