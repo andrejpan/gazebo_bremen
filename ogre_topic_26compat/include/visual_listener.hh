@@ -80,12 +80,7 @@ namespace gazebo
         /// \brief Standard Ogre entity.
         private: Ogre::Entity *entity;
 
-        // tmp sphere for testing
-        /// \brief Standard Ogre scene node.
-        private: Ogre::SceneNode *sceneNodeClosest;
 
-        /// \brief Standard Ogre entity.
-        private: Ogre::Entity *entityClosest;
 
         /// \brief Minimal fixation data from sensor.
         private: math::Vector2i coords2i;
@@ -114,10 +109,19 @@ namespace gazebo
         public: void cb(ConstWorldStatisticsPtr &_msg);
 
         //// \brief TODO not sure what it is for
-        private: void getClosestObject();
+        private: void getClosestObjects();
 
         //// \brief TODO not sure what it is for
-        private: void getClosestObjects();
+        private: void getClosestObjectss();
+
+        struct myObject {
+            double distance;
+            std::string objectName;
+            math::Vector3 contactPoint;
+            int colorNumber;
+        };
+
+        int colorCounter = 0;
 
         /// \brief Connection to the server.
         private: void ConnectToServer();
@@ -128,7 +132,7 @@ namespace gazebo
         /// \brief TODO.
         public: void OnUpdate();
 
-    private: bool sort_pred(const std::pair<double, std::string> &left, const std::pair<double, std::string> &right);
+
 
         /// \brief Calculating if we get an object back or we get an error
         int suc_counter = 1;
