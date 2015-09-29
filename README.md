@@ -1,6 +1,37 @@
 # gazebo_bremen
 
-## Before runing this code you should run set up [Tobii EyeX Traceker](https://github.com/andrejpan/toobi_eyex_tracker_server)
+## Before runing projects below you must run set up [Tobii EyeX Traceker](https://github.com/andrejpan/toobi_eyex_tracker_server)
+
+## Project: [gazebo_eye_tracker](https://github.com/andrejpan/gazebo_bremen/tree/master/gazebo_eye_tracker)
+
+Program detects which objects are you looking inside Gazebo simulator and logs it.
+
+## Prerequisites
+For logging purpose we use Mongodb tehnology. On Ubuntu you can install server through package manager. For client side we use [mongodb-cxx-client](https://github.com/mongodb/mongo-cxx-driver), 26compat branch. Our installed instructure looks like this: 
+```
+$ scons --prefix=$HOME/mongo-client-install-26compat --sharedclient --full --use-system-boost install-mongoclient
+```
+Update path to mongodb-cxx-client inside [CMakeLists.txt](https://github.com/andrejpan/gazebo_bremen/blob/master/gazebo_eye_tracker/CMakeLists.txt#L6).
+
+If you want to run [kitchen.world](https://github.com/andrejpan/gazebo_bremen/blob/master/gazebo_eye_tracker/worlds/kitchen.world) you must download [models](https://bitbucket.org/dobracristian/gz_models) and update GAZEBO_MODEL_PATH.
+
+Inside [EyeTracker.hh](https://github.com/andrejpan/gazebo_bremen/blob/master/gazebo_eye_tracker/include/EyeTracker.hh#L29) you must set up server ip and port number. 
+
+## Usage
+```
+$ mkdir build && cd build
+$ cmake ..
+$ make
+```
+## Run
+```
+$ gazebo -u --verbose worlds/kitchen.world
+```
+After you start simulation, you will see small spheres which detects objects that you currently looking. 
+![alt tag](https://github.com/andrejpan/gazebo_bremen/blob/master/pic/objects.png)
+
+Data is also logged when simulation is running.
+![alt tag](https://github.com/andrejpan/gazebo_bremen/blob/master/pic/mongodb-entry.png)
 
 ## Project: [gazebo_ogre_sphere](https://github.com/andrejpan/gazebo_bremen/tree/master/gazebo_ogre_sphere)
 
