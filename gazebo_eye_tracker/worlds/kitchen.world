@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="kitchen_world">
+
+    <gui fullscreen='1'>
+      <camera name="kitchen_camera">
+	    <pose>-1 0.1 1.5 0 0.4 0</pose>
+      </camera>
+    </gui>
+
+    <model name="unit_box">
+      <pose>0 0 100 0 0 0</pose>
+      <link name="link">
+        <collision name="box_collision">
+          <geometry>
+            <box>
+              <size>0 0 0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="box_visual">
+            <plugin name="visual-listener" filename="build/src/libeye_tracker.so"/>
+          <geometry>
+            <box>
+              <size>0 0 0</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>model://sun_vertical</uri>
+    </include>
+
+    <include>
+      <uri>model://kitchen_floor</uri>
+    </include>
+    
+     <include>
+      <uri>model://chem_table</uri>
+    </include> 
+
+    <include>
+        <uri>model://measuring_cylinder</uri>
+        <pose>0.7 0.1 1.21 0.0 0.0 0.0</pose>
+    </include>
+    
+     <include>
+        <uri>model://test_tube_rack</uri>
+        <pose>0.7 0.6 1.22 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://test_tube</uri>
+        <pose>0.72 0.56 1.3 0.0 0.0 0.0</pose>
+    </include> 
+    
+        <include>
+        <uri>model://test_tube</uri>
+        <pose>0.72 0.52 1.3 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://test_tube</uri>
+        <pose>0.68 0.64 1.3 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://test_tube</uri>
+        <pose>0.68 0.6 1.3 0.0 0.0 0.0</pose>
+    </include> 
+    
+    <include>
+        <uri>model://test_tube</uri>
+        <pose>0.72 0.6 1.3 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://berzelius</uri>
+        <pose>0.30 0.1 0.85100 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://conical_flask</uri>
+        <pose>0.45 -0.3 0.85100 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://florence_flask</uri>
+        <pose>0.45 -0.5 0.85100 0.0 0.0 0.0</pose>
+    </include>
+    
+    <include>
+        <uri>model://flask_bottomed</uri>
+        <pose>0.45 -0.7 0.85100 0.0 0.0 0.0</pose>
+    </include> 
+    
+    <include>
+        <uri>model://gas_jar</uri>
+        <pose>0.35 0.8 0.85100 0.0 0.0 0.0</pose>
+    </include>   
+    <plugin name="word_sim_time_publisher" filename="build/src/libworld_time_publisher.so"/>
+  </world>
+</sdf>
