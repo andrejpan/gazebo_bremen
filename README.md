@@ -33,6 +33,14 @@ After you start simulation, you will see small spheres which detects objects tha
 Data is also logged when simulation is running.
 ![alt tag](https://github.com/andrejpan/gazebo_bremen/blob/master/pic/mongodb-entry.png)
 
+## Project [eye_tracker_legacy](https://github.com/andrejpan/gazebo_bremen/tree/master/eye_tracker_legacy)
+Is the same project as one above, but it is ussing Mongodb legacy driver.
+
+Compiling instruction:
+```
+$ scons --prefix=$HOME/mongo-client-install --sharedclient --c++11=on install 
+```
+
 ## Project: [gazebo_ogre_sphere](https://github.com/andrejpan/gazebo_bremen/tree/master/gazebo_ogre_sphere)
 
 Program draws red sphere inside XY plane. The sphere is drawn at same position where we are looking a screen.
